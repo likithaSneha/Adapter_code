@@ -1,0 +1,103 @@
+SET SERVEROUTPUT ON;
+DECLARE
+      COUNTER NUMBER;
+      OUTPUT CLOB;
+      K NUMBER;
+BEGIN 
+FOR N IN 2 .. 1000 LOOP
+COUNTER :=0;
+K:=FLOOR(N/2);
+FOR I IN 2 .. K LOOP
+IF (MOD(N,I)=0) THEN
+COUNTER :=1;
+END IF;
+END LOOP;
+
+IF (COUNTER = 0 ) THEN 
+OUTPUT :=OUTPUT||N||'&';
+END IF;
+END LOOP;
+DBMS_OUTPUT.PUT_LINE(SUBSTR(OUTPUT,1,LENGTH(OUTPUT)-1));
+END;
+/
+
+
+
+
+
+
+
+
+
+
+
+select hid, hn, cnt, count(cnt)
+from(select c.hacker_id hid, h.name hn, count(c.challenge_id) cnt
+from hackers h, challenges c 
+where h.hacker_id = c.hacker_id
+group by c.hacker_id, h.name
+order by count(c.challenge_id))
+group by cnt, hn,hid
+having count(cnt)=1
+;
+
+
+
+
+
+
+
+
+
+select h.hacker_id,h.name,sum(sscore)
+from Hackers h inner join (select s.hacker_id,max(score) sscore from Submissions s group by s.hacker_id,s.challenge_id) st on h.hacker_id=st.hacker_id
+group by h.hacker_id,h.name
+having sum(sscore)>0
+order by sum(sscore) desc,h.hacker_id asc;
+
+
+
+
+
+
+
+
+
+https://learn.oracle.com/ols/course/oracle-cloud-infrastructure-architect-professional-workshop/35644/97914/144365
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+select wid,wage, cn, wr from 
+(select row_number() over (partition by age order by w.coins_needed asc) f,
+ w.id wid, wp.age wage, w.coins_needed cn, w.power wr 
+from wands w, wands_property wp 
+where w.code=wp.code
+and wp.is_evil!=1)
+where f=1
+order by   wr desc
+;
+
+
+
+
+
+
+
+SELECT SYS_CONNECT_BY_PATH(NULL, '* ') FROM DUAL CONNECT BY ROWNUM <= 20 ORDER BY 1 DESC;
+
+select c.contest_id, c.hacker_id, c.name, sum(s.total_submissions),s.total_accepted_submissions, v.total_views, v.total_unique_views
+from contests c, submission_stats s, view_stats v, challenges ct, colleges cl
+where v.challenge_id = s.challenge_id and c.contest_id=cl.contest_id and cl.college_id=ct.college_id
+group by c.contest_id, c.hacker_id, c.name, s.total_accepted_submissions, v.total_views,v.total_unique_views;
