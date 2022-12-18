@@ -1,0 +1,57 @@
+1. import java.sql.* package
+2.Class.forName("com.mysql.jdbc.driver")
+3. Connection con =DriverMangaer.get Connection("URL", "UN","PW");
+4. Statement st= com.createStatement();
+5. ResultSet rs = st.executeQuery("select * from students")
+6. while(rs.next())
+   {
+     sysout(rs.getInt()+" "+ rs.getString());
+   }
+7.st.close();
+  con.close();
+
+
+
+
+
+
+
+
+import java.sql.*;
+
+public class DemoClass {
+
+	public static void main(String[] args) throws Exception {
+		// TODO Auto-generated method stub
+		       // String driver="com.mysql.cj.jdbc.Driver";
+		        String url="jdbc:mysql://localhost:3306/sql_invoicing";
+				String uname="root";
+				String pwd="likitha@4855*";
+				//System.setProperty(driver, " ");
+				String query="select * from clients where client_id=3";
+Class.forName("com.mysql.cj.jdbc.Driver");
+Connection con =DriverManager.getConnection(url,uname,pwd);
+Statement st=con.createStatement();
+ResultSet rs=st.executeQuery(query);	
+rs.next();
+String name=rs.getString("name");
+System.out.println(name);
+/*while(rs.next())
+	{
+	String name=rs.getString("name");
+	String add=rs.getString("address");
+	String cty=rs.getString("city");
+	String ste=rs.getString("state");
+	int pne=rs.getInt("phone");
+	System.out.println(name);
+	/*System.out.println(add);
+	System.out.println(cty);
+	System.out.println(ste);
+	System.out.println(pne);
+	}*/
+
+st.close();
+con.close();
+}
+
+}
