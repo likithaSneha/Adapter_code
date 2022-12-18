@@ -2,7 +2,7 @@
 2.Class.forName("com.mysql.jdbc.driver")
 3. Connection con =DriverMangaer.get Connection("URL", "UN","PW");
 4. Statement st= com.createStatement();
-5. ResultSet rs = st.executeQuery("select * from studentsData")
+5. ResultSet rs = st.executeQuery("select * from studentsData_t")
 6. while(rs.next())
    {
      sysout(rs.getInt()+" "+ rs.getString());
